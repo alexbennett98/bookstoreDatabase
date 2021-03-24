@@ -1,19 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model IQueryable<Book>
-<header>
-    <h1>Bookstore Database</h1>
-</header>
+@model ProjectListViewModel
 
-@foreach(var x in Model)
+@foreach(var x in Model.Books)
 {
-    <div>
-        <h3>@x.Title</h3>
-        <p>Author: @x.Author</p>
-        <p>Publisher: @x.Publisher</p>
-        <p>ISBN: @x.ISBN</p>
-        <p>Category: @x.Category</p>
-        <p>Price: $@x.Price</p>
-    </div>
+    <partial name="ProjectSummary" model="x" />
 }
+
+<div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true" page-class="btn"
+     page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary" page-url-category="@Model.Category"
+     class="btn-group pull-right m-1"></div>

@@ -1,0 +1,26 @@
+﻿using bookstoreDatabase.Models;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace bookstoreDatabase.Components
+{
+    public class NavigationMenuViewComponent : ViewComponent
+    {
+        private IBookstoreRepository repository;
+        
+        public NavigationMenuViewComponent (IBookstoreRepository r)
+        {
+            repository = r;
+        }
+        public IViewComponentResult Invoke()
+        {
+            return View(repository.Books
+                .Select(x => x.Category)
+                .Distinct()
+                .OrderBy(x => x));
+        }
+    }
+}

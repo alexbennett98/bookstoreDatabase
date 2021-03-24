@@ -8,8 +8,15 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <div>
-        @RenderBody()
+    <div class="bg-dark text-white p-2">
+        <span class="navbar-brand ml-5">Bookstore</span>
     </div>
+    <div class="row m-1 p-1">
+        <div id="intro" class="col-3">
+            <h1>Pick a Book!</h1>  
+            <vc:navigation-menu />
+        </div>
+    </div>
+    @RenderBody()
 </body>
 </html>

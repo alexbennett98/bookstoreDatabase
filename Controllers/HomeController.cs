@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using bookstoreDatabase.Models.ViewModels;
 
 namespace bookstoreDatabase.Controllers
 {
@@ -15,15 +16,35 @@ namespace bookstoreDatabase.Controllers
 
         private IBookstoreRepository _repository;
 
+        public int PageSize = 3;
+
         public HomeController(ILogger<HomeController> logger, IBookstoreRepository repository)
         {
             _logger = logger;
             _repository = repository;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string category, int page = 1)
         {
-            return View(_repository.Books);
+            return View(new ProjectListViewModel
+            {
+                Books = _repository.Books
+                .Where(b => category == null || b.Category == category)
+                .OrderBy(b => b.BookId)
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize)
+                ,
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItempsPerPage = PageSize,
+                    TotalNumItems = _repository.Books.Count()
+                },
+                Category = category
+            }); 
+                
+                
+               
         }
 
         public IActionResult Privacy()
