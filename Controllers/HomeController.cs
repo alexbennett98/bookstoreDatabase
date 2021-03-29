@@ -38,7 +38,8 @@ namespace bookstoreDatabase.Controllers
                 {
                     CurrentPage = page,
                     ItempsPerPage = PageSize,
-                    TotalNumItems = _repository.Books.Count()
+                    TotalNumItems = category == null ? _repository.Books.Count() : 
+                        _repository.Books.Where (x => x.Category == category).Count()
                 },
                 Category = category
             }); 
